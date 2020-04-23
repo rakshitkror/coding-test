@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  row: MyString
+  column: 1
+  status: MyString
+  movie: one
+
+two:
+  row: MyString
+  column: 1
+  status: MyString
+  movie: two

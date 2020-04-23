@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_22_153607) do
+ActiveRecord::Schema.define(version: 2020_04_22_221724) do
 
   create_table "movies", force: :cascade do |t|
     t.string "movie_name"
@@ -24,4 +24,15 @@ ActiveRecord::Schema.define(version: 2020_04_22_153607) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "seats", force: :cascade do |t|
+    t.string "row"
+    t.integer "column"
+    t.string "status"
+    t.integer "movie_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_seats_on_movie_id"
+  end
+
+  add_foreign_key "seats", "movies"
 end

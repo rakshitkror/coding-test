@@ -69,15 +69,14 @@ module SeatAllocatorConcern
         return (string);
     end
 
-    def main(no_of_seats = 1, id)
+    def find_seats(no_of_seats = 1, id)
         no_of_seats = no_of_seats.to_i
         @movie_for_seats = Movie.find_by(id: id)
         if (@movie_for_seats.movie_name == '') 
             return ('Error: Please provide movie title');
             return 1; 
         end
-        @data = JSON.parse(File.read("movies/#{@movie_for_seats.movie_name}.json"));
-
+        @data = JSON.parse(MovieSerializer.new(@movie_for_seats).to_json);
         @rows = @movie_for_seats.rows;
         @cols = @movie_for_seats.column;
         if (no_of_seats > @cols)
