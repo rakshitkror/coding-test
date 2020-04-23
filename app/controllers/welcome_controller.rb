@@ -1,6 +1,7 @@
 class WelcomeController < ApplicationController
   include SeatAllocatorConcern
-  before_action :set_attributes
+  include ObjectInitConcern
+  before_action :initialize_objects
   def index
   end
 
@@ -14,12 +15,6 @@ class WelcomeController < ApplicationController
   def createmovie
     @movie = Movie.create(movie_params)
     redirect_to welcome_index_path
-  end
-
-  def set_attributes
-    @recommended_seats = ''
-    @movies = Movie.all
-    @movie = Movie.new
   end
 
   private

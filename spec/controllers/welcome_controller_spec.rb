@@ -15,26 +15,6 @@ RSpec.describe WelcomeController, type: :controller do
   describe 'GET #available seats' do
     before do
       @movie = FactoryBot.create(:movie)
-      final = Hash[
-        "seats" => Hash.new
-      ]
-
-      for i in 0..(Integer(@movie.rows)-1)
-        for j in 0..(Integer(@movie.column)-1)
-          seatId =  (i+97).chr + (j+1).to_s
-          final["seats"][seatId] = Hash[
-            "id": seatId,
-            "row": seatId[0],
-            "column": seatId[1],
-            "status": "AVAILABLE"
-          ]
-        end
-      end
-
-      File.open("movies/#{@movie.movie_name}.json", "w") do |f|     
-        f.write(final.to_json)   
-      end
-
     end
     subject { get :get_seats , params: {id: @movie.id, seats: 2}}
 
