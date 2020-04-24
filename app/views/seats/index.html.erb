@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Movies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Movie name</th>
+      <th>row</th>
+      <th>column</th>
+      <th>Seat ID</th>
+      <th>status</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @seats.each do |seat| %>
+      <tr>
+        <td><%= seat.movie.movie_name %></td>
+        <td><%= seat.row %></td>
+        <td><%= seat.column %></td>
+        <td><%= seat.seat_combination %></td>
+        <td><%= seat.status %></td>
+        <% if seat.status == "AVAILABLE" %>
+          <td><%= link_to 'Unavailable', movie_seat_path(id: seat.id,status: "UNAVAILABLE"), method: :put, data: { confirm: 'Are you sure?' } %></td>
+        <% elsif seat.status == "UNAVAILABLE" %>
+          <td><%= link_to 'Available', movie_seat_path(id: seat.id,status: "AVAILABLE"), method: :put, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', movie_path(@movie) %> | 
+<%= link_to 'Home', root_path %>

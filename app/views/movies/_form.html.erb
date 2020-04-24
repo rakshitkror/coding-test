@@ -1,0 +1,59 @@
+<%= form_with(model: movie, local: true) do |form| %>
+  <% if movie.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
+
+      <ul>
+        <% movie.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+      <div class="col">
+          <div class="form-group">
+              <%= form.label :movie_name %><br>
+              <%= form.text_field :movie_name , class: "form-control", placeholder: "Movie Name", :required => true%>
+          </div>
+      </div>
+      <div class="col">
+          <div class="form-group">
+              <%= form.label :summary %><br>
+              <%= form.text_field :summary , class: "form-control", placeholder: "Summary", :required => true%>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col">
+          <div class="form-group">
+              <%= form.label :genre %><br>
+              <%= form.text_field :genre, class: "form-control", placeholder: "Movie Genre", :required => true%>
+          </div>
+      </div>
+      <div class="col">
+          <div class="form-group">
+             <%= form.label :year %><br>
+             <%= form.select :year, (2000..Time.now.year).to_a, {:include_blank => "Select year", :required => true } , {class: "form-control"}%>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col">
+          <div class="form-group">
+              <%= form.label :imdb %><br>
+              <%= form.text_field :imdb , class: "form-control", placeholder: "Movie imdb link"%>
+          </div>
+      </div>
+  </div>
+  
+  <div class="row">
+      <div class="col">
+          <div class="form-group">
+              <%= form.label :venue %><br>
+              <%= form.collection_select :venue_id, Venue.order(:name),:id,:name, {:include_blank => "Select Venue", :required => true } , {class: "form-control"} %>
+          </div>
+      </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+<% end %>

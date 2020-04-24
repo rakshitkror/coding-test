@@ -11,11 +11,11 @@ class MovieSerializer < ActiveModel::Serializer
   end
 
   def seats
-  	seat1 = Hash.new
-  	object.seats.each do |seat2|
-  		seat1.store("#{seat2.row}#{seat2.column}", seat2.as_json.except('id', 'created_at', 'updated_at' , 'movie_id').merge(id: "#{seat2.row}#{seat2.column}" ))
+  	all_seat = Hash.new
+  	object.seats.each do |seat|
+  		all_seat.store("#{seat.row}#{seat.column}", seat.as_json.except('id', 'seat_combination' , 'movie_id').merge(id: "#{seat.row}#{seat.column}" ))
   	end
-  	seat1
+  	all_seat
   end
 end
 

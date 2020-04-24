@@ -1,0 +1,16 @@
+<p>
+  <strong>SEATS BOOKED</strong>
+  <%= @seats.join(', ') %>
+</p>
+
+<p>
+  <strong>Movie Name:</strong>
+  <%= @movie.movie_name %>
+</p>
+
+<p>
+  <strong>Venue:</strong>
+  <%= @movie.venue.name %>
+</p>
+
+<%= link_to 'Home', root_path %>

@@ -2,6 +2,6 @@ module ObjectInitConcern
     def initialize_objects
         @recommended_seats = ''
         @movies = Movie.all
-        @movie = Movie.new
+        @movie = Movie.find_by(id: params[:movie_id])
     end
 end

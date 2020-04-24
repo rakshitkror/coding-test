@@ -8,6 +8,15 @@
             <% if @recommended_seats.class == Array %>
                 <div class="alert alert-success" role="alert">
                     Your recommended seats are: <%=@recommended_seats.join(', ')%>
+                    <form method="post" action="/welcome/book_seats">
+                        <td>
+                            <input type="hidden" value="<%=@movie.id%>" name="movie_id">
+                            <input type="hidden" value="<%=@recommended_seats%>" name="seats">
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">Book Seats</button>
+                        </td>
+                    </form>
                 </div>
             <%elsif @recommended_seats.length > 0 %>
                 <div class="alert alert-danger" role="alert">
@@ -34,74 +43,27 @@
                             <td><%= movie.year%></td>
                             <td><%= movie.genre%></td>
                             <td><%= movie.imdb%></td>
-                            <form method="GET" action="/welcome/get_seats">
+                            <%= form_for :form, :url => welcome_get_seats_path, :method => :get do |email| %>
                                 <td>
+                                    <%= email.number_field :numseats, class: "form-control", placeholder: "Number of Seats"  %>
+                                    <%= email.hidden_field :movie_id, value: movie.id %>
+                                </td>
+                                <td>
+                                    <%= email.submit "Find Seats",class: "btn btn-primary" %>
+                                </td>
+                              <% end %>
+                            <!-- <form method="GET" action="/welcome/get_seats">
                                     <input type="text" class="form-control" placeholder="Number of Seats" name="numseats">
-                                    <input type="hidden" value="<%=movie.id%>" name="id">
-                                </td>
-                                <td>
+                                    <input type="hidden" value="<%=movie.id%>" name="movie_id">
                                     <button type="submit" class="btn btn-primary">Find Seats</button>
-                                </td>
-                            </form>
+                            </form> -->
                         </tr>
                     <% end %>
                 </tbody>
             </table>
-
-            <%= form_for @movie, url: welcome_createmovie_path, method: :post do |form| %>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <%= form.label :movie_name %><br>
-                            <%= form.text_field :movie_name , class: "form-control", placeholder: "Movie Name", :required => true%>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <%= form.label :summary %><br>
-                            <%= form.text_field :summary , class: "form-control", placeholder: "Summary", :required => true%>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <%= form.label :genre %><br>
-                            <%= form.text_field :genre, class: "form-control", placeholder: "Movie Genre", :required => true%>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                           <%= form.label :year %><br>
-                           <%= form.select :year, (2000..Time.now.year).to_a, {:include_blank => "Select year", :required => true } , {class: "form-control"}%>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <%= form.label :imdb %><br>
-                            <%= form.text_field :imdb , class: "form-control", placeholder: "Movie imdb link"%>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <%= form.label :rows %><br>
-                            <%= form.number_field :rows, class: "dropdown form-control number_field", :required => true %>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <%= form.label :column %><br>
-                            <%= form.number_field :column, class: "dropdown form-control select", :required => true %>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            <% end %>
         </div>
+
+        <%= link_to 'Movies', movies_path %> |
+        <%= link_to 'Venues', venues_path %>
     </body>
 </html>

@@ -71,14 +71,14 @@ module SeatAllocatorConcern
 
     def find_seats(no_of_seats = 1, id)
         no_of_seats = no_of_seats.to_i
-        @movie_for_seats = Movie.find_by(id: id)
-        if (@movie_for_seats.movie_name == '') 
+        @movie = Movie.find_by(id: id)
+        if (@movie.movie_name == '') 
             return ('Error: Please provide movie title');
             return 1; 
         end
-        @data = JSON.parse(MovieSerializer.new(@movie_for_seats).to_json);
-        @rows = @movie_for_seats.rows;
-        @cols = @movie_for_seats.column;
+        @data = JSON.parse(MovieSerializer.new(@movie).to_json);
+        @rows = @movie.venue.rows;
+        @cols = @movie.venue.columns;
         if (no_of_seats > @cols)
             return ('Error: Number of seats requested exceeds number of seats available in a row');
             return 1;
